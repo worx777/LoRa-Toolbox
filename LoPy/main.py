@@ -2,7 +2,7 @@
 ## Project: LoRa Toolbox
 ## File name:: main.py
 ## Created by: Manuel Bechel (SES) for Trier University of Applied Sciences
-## Date: 03.08.2022
+## Date: 12.08.2022
 ##
 ## Description: The LoRa Toolbox provides a simple start to play around with
 ## LoRa enbaled PyCom LoPy 4 Microcontrollers. Targeted audience for this project
@@ -20,7 +20,7 @@ import socket
 import time
 import pycom
 
-print("main.py - V1.7")
+print("main.py - V1.8")
 
 # constants
 BW125 = LoRa.BW_125KHZ
@@ -133,6 +133,7 @@ def LoRaRX(addr, msg):
             #if s.recv(64) == b'LoRa Toolbox':
             if s.recv(64) == msg.encode('utf-8'):
                 print('LoRa message received - Nr. {}'.format(i))
+                sendSocket(addr, 'RX','SUCCESS', FQ, SF)
                 i = i+1
             time.sleep(0.1)
     else:
@@ -141,6 +142,7 @@ def LoRaRX(addr, msg):
         while int(time.time()) < epochTime+durationTime:
             if s.recv(64) == msg.encode('utf-8'):
                 print('Msg received - Nr. {}'.format(i))
+                sendSocket(addr, 'RX','SUCCESS', FQ, SF)
                 i = i+1
             time.sleep(0.1)
         sendSocket(addr, 'RX','END', 0, 0)
