@@ -511,12 +511,12 @@ class App(tk.Tk):
                 decoded_data = data.decode('utf-8')
                 # Regex to check if the message is a specific format. Example: 192.168.100.10:TX:START:868000000:11
                 # First part is the IP, second the mode (TX, RX or SCAN), third part the status (START, END or SUCCESS)
-                # and the fourth and fifth part is used for successful scans to submit the frequency and spreading
+                # and the fourth and fifth part is used for successful scans/receives to submit the frequency and spreading
                 # factor.
                 if re.match('^(?:\d{1,3}\.){3}\d{1,3}:(TX|RX|SCAN):(START|END|SUCCESS):\d{1,10}:\d{1,10}$',
                             decoded_data):
                     splitData = decoded_data.split(":")
-                    # If it's a scan success, then the logentry will contain frequency and SF, otherwise not
+                    # If it's a scan/receive success, then the logentry will contain frequency and SF, otherwise not
                     if splitData[2] == 'SUCCESS':
                         self.logEntry("IP: {}, Mode: {}, Status: {}, Freq: {}, Spreading Factor: {}"
                                       .format(splitData[0], splitData[1], splitData[2], splitData[3], splitData[4]))
